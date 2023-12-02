@@ -70,8 +70,9 @@ export const ChatMessages = ({
     shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
     count: data?.pages?.[0]?.items?.length ?? 0,
   })
-
-  if (status === "loading") {
+  
+  if ( status === "pending") {
+    // Handle loading or pending state
     return (
       <div className="flex flex-col flex-1 justify-center items-center">
         <Loader2 className="h-7 w-7 text-zinc-500 animate-spin my-4" />
@@ -79,10 +80,10 @@ export const ChatMessages = ({
           Loading messages...
         </p>
       </div>
-    )
+    );
   }
-
-  if (status === "error") {
+   if (status === "error" || !status) {
+    // Handle error state
     return (
       <div className="flex flex-col flex-1 justify-center items-center">
         <ServerCrash className="h-7 w-7 text-zinc-500 my-4" />
@@ -90,8 +91,8 @@ export const ChatMessages = ({
           Something went wrong!
         </p>
       </div>
-    )
-  }
+    );
+  } 
 
   return (
     <div ref={chatRef} className="flex-1 flex flex-col py-4 overflow-y-auto">
